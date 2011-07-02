@@ -45,18 +45,22 @@
 
 import doctest
 
-def parse_file(f):
+def parse_file(filename):
   """
   parse_file reads a puzzle input file and returns the number of allowed
   greenhouses.
 
-  >>> import tempfile
-  >>> f = tempfile.TemporaryFile()
-  >>> f.write("4")
-  >>> parse_file(f)
+  >>> f = open("*doctest*parse_file*", "w")
+  >>> f.write(r"4")
+  >>> f.close()
+  >>> parse_file("*doctest*parse_file*")
   4
   """
-  pass
+  f = open(filename, "r")
+  lines = f.readlines()
+  f.close()
+
+  return int(lines[0]) 
 
 if __name__ == "__main__":
   doctest.testmod()
