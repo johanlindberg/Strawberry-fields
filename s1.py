@@ -59,10 +59,25 @@ def parse_file(filename):
   [(4, ['.@@.', '.@@.', '..@.'])]
   """
   f = open(filename, "r")
-  lines = f.readlines()
+
+  result = []
+  max, field = None, []
+  for line in f.readlines():
+    line = line.strip()
+    if max is None:
+      max = int(line)
+    elif line.strip() == "":
+      result.append((max, field))
+      max, field = None, []
+    else:
+      field.append(line)
+
+  if max is not None:
+    result.append((max, field))
+
   f.close()
 
-  return int(lines[0]) 
+  return result 
 
 if __name__ == "__main__":
   doctest.testmod()
