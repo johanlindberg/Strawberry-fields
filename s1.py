@@ -69,6 +69,9 @@ def parse_file(filename):
   >>> f.close()
   >>> parse_file("*doctest*parse_file*")
   [(4, ['.@@.', '.@@.', '..@.']), (3, ['.@@.', '.@@.', '..@.'])]
+
+  >>> import os
+  >>> os.remove("*doctest*parse_file*")
   """
   f = open(filename, "r")
 
@@ -76,11 +79,12 @@ def parse_file(filename):
   max, field = None, []
   for line in f.readlines():
     line = line.strip()
-    if max is None:
+    if line == "":
+      if max is not None:
+        result.append((max, field))
+        max, field = None, []
+    elif max is None:
       max = int(line)
-    elif line.strip() == "":
-      result.append((max, field))
-      max, field = None, []
     else:
       field.append(line)
 
