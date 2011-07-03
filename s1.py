@@ -47,14 +47,16 @@ import doctest
 
 def parse_file(filename):
   """
-  parse_file reads a puzzle input file and returns the number of allowed
-  greenhouses.
+  parse_file reads a puzzle input file and returns a list of puzzle details.
+
+  puzzle details are represented as a tuple containing the maximum number of
+  greenhouses and a list of strings representing the field.
 
   >>> f = open("*doctest*parse_file*", "w")
-  >>> f.write(r"4")
+  >>> f.write("4\\n.@@.\\n.@@.\\n..@.")
   >>> f.close()
   >>> parse_file("*doctest*parse_file*")
-  4
+  [(4, ['.@@.', '.@@.', '..@.'])]
   """
   f = open(filename, "r")
   lines = f.readlines()
