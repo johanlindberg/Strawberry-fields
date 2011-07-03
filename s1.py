@@ -57,6 +57,18 @@ def parse_file(filename):
   >>> f.close()
   >>> parse_file("*doctest*parse_file*")
   [(4, ['.@@.', '.@@.', '..@.'])]
+
+  >>> f = open("*doctest*parse_file*", "w")
+  >>> f.write("4\\n.@@.\\n.@@.\\n..@.\\n\\n3\\n.@@.\\n.@@.\\n..@.")
+  >>> f.close()
+  >>> parse_file("*doctest*parse_file*")
+  [(4, ['.@@.', '.@@.', '..@.']), (3, ['.@@.', '.@@.', '..@.'])]
+
+  >>> f = open("*doctest*parse_file*", "w")
+  >>> f.write("4\\n.@@.\\n.@@.\\n..@.\\n\\n\\n3\\n.@@.\\n.@@.\\n..@.")
+  >>> f.close()
+  >>> parse_file("*doctest*parse_file*")
+  [(4, ['.@@.', '.@@.', '..@.']), (3, ['.@@.', '.@@.', '..@.'])]
   """
   f = open(filename, "r")
 
