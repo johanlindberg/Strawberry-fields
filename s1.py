@@ -51,27 +51,6 @@ def parse_file(filename):
 
   puzzle details are represented as a tuple containing the maximum number of
   greenhouses and a list of strings representing the field.
-
-  >>> f = open("*doctest*parse_file*", "w")
-  >>> f.write("4\\n.@@.\\n.@@.\\n..@.")
-  >>> f.close()
-  >>> parse_file("*doctest*parse_file*")
-  [(4, ['.@@.', '.@@.', '..@.'])]
-
-  >>> f = open("*doctest*parse_file*", "w")
-  >>> f.write("4\\n.@@.\\n.@@.\\n..@.\\n\\n3\\n.@@.\\n.@@.\\n..@.")
-  >>> f.close()
-  >>> parse_file("*doctest*parse_file*")
-  [(4, ['.@@.', '.@@.', '..@.']), (3, ['.@@.', '.@@.', '..@.'])]
-
-  >>> f = open("*doctest*parse_file*", "w")
-  >>> f.write("4\\n.@@.\\n.@@.\\n..@.\\n\\n\\n3\\n.@@.\\n.@@.\\n..@.")
-  >>> f.close()
-  >>> parse_file("*doctest*parse_file*")
-  [(4, ['.@@.', '.@@.', '..@.']), (3, ['.@@.', '.@@.', '..@.'])]
-
-  >>> import os
-  >>> os.remove("*doctest*parse_file*")
   """
   f = open(filename, "r")
 
@@ -97,3 +76,4 @@ def parse_file(filename):
 
 if __name__ == "__main__":
   doctest.testmod()
+  doctest.testfile("tests.text")
