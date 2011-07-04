@@ -8,6 +8,9 @@ def solve1(puzzle):
 
   >>> solve1((1, ['.@@.', '.@@.', '.@@.']))
   ['.AA.', '.AA.', '.AA.']
+
+  >>> solve1((1, ['@..', '.@.', '..@']))
+  ['AAA', 'AAA', 'AAA']
   """
   max, field = puzzle
   result = []
