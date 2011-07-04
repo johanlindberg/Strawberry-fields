@@ -9,7 +9,20 @@ def solve1(puzzle):
   >>> solve1((1, ['.@@.', '.@@.', '.@@.']))
   ['.AA.', '.AA.', '.AA.']
   """
-  pass
+  max, field = puzzle
+  result = []
+  for line in field:
+    _line = []
+    for c in line:
+      if c == "@":
+        _line += "A"
+      else:
+        _line += c
+
+    result.append("".join(_line))
+
+  return result
+      
 
 def parse_file(filename):
   """
