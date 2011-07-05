@@ -15,9 +15,11 @@ def solve1(puzzle):
   >>> solve1((1, ['@..', '.@.', '..@']))
   ['A..', '.B.', '..C']
   """
-  max, field = puzzle
+  import string
 
-  greenhouses = iter("ABCDEF")
+  max, field = puzzle
+  greenhouses = iter(string.uppercase)
+
   result = []
   for line in field:
     _line = []
