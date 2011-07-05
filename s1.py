@@ -16,7 +16,7 @@ def solve2(puzzle):
   
   # join greenhouses horizontally
   for r in xrange(len(field)):
-    for c in xrange(len(field[r])):
+    for c in xrange(len(field[r]) - 1):
       if field[r][c] > 0 and \
          field[r][c+1] > 0 and \
          field[r][c] != field[r][c+1]:
