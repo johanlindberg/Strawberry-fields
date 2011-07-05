@@ -9,7 +9,51 @@ def solve2(puzzle):
   >>> solve2((1, [[0, 1, 2, 0], [0, 3, 4, 0], [0, 5, 6, 0]]))
   [[0, 1, 1, 0], [0, 1, 1, 0], [0, 1, 1, 0]]
   """
-  pass
+  max, field = puzzle
+  
+  # join greenhouses horizontally
+  for r in xrange(len(field)):
+    for c in xrange(len(field[r])):
+      if field[r][c] > 0 and \
+         field[r][c+1] > 0 and \
+         field[r][c] != field[r][c+1]:
+
+        field[r][c+1] = field[r][c]
+
+  # join greenhouses vertically
+  for r in xrange(len(field) - 1):
+    start, stop = -1, -1
+    for c in xrange(len(field[r])):
+      if field[r][c] > 0:
+        if start == -1:
+          start = c
+        elif field[r][c] != field[r][c+1]:
+          stop = c
+
+          # if we end up here we've found a chain of greenhouses
+          # if we find a similar chain in the row below we join
+          # them, otherwise we leave them as they are (for now)
+          
+          join = True
+          i = start
+          while i < stop:
+            if field[r+1][i] == 0 or \
+               field[r+1][i] != field[r+1][i+1]:
+
+              join = False
+              break
+            
+            i += 1
+          
+          if join:
+            while start <= stop:
+              field[r+1][start] = field[r][start]
+
+              start += 1
+
+          start, stop = -1, -1
+
+  return field
 
 def solve1(puzzle):
   """
