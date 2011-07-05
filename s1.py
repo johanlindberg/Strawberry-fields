@@ -29,7 +29,7 @@ def solve2(puzzle):
   # join greenhouses vertically
   for r in xrange(len(field) - 1):
     start, stop = -1, -1
-    for c in xrange(len(field[r])):
+    for c in xrange(len(field[r]) - 1):
       if field[r][c] > 0:
         if start == -1:
           start = c
