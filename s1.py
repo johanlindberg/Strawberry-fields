@@ -14,6 +14,9 @@ def solve1(puzzle):
 
   >>> solve1((1, ['@..', '.@.', '..@']))
   ['A..', '.B.', '..C']
+
+  >>> solve1((1, ['@@@@@@', '@@@@@@', '@@@@@@', '@@@@@@', '@@@@@@']))
+  ['ABCDEF', 'GHIJKL', 'MNOPQR', 'STUVWX', 'YZ????']
   """
   import string
 
