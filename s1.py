@@ -10,29 +10,30 @@ def solve1(puzzle):
   in the field and the max number of greenhouses.
 
   >>> solve1((1, ['.@@.', '.@@.', '.@@.']))
-  ['.AB.', '.CD.', '.EF.']
+  [[0, 1, 2, 0], [0, 3, 4, 0], [0, 5, 6, 0]]
 
   >>> solve1((1, ['@..', '.@.', '..@']))
-  ['A..', '.B.', '..C']
+  [[1, 0, 0], [0, 2, 0], [0, 0, 3]]
 
   >>> solve1((1, ['@@@@@@', '@@@@@@', '@@@@@@', '@@@@@@', '@@@@@@']))
-  ['ABCDEF', 'GHIJKL', 'MNOPQR', 'STUVWX', 'YZ????']
+  [[1, 2, 3, 4, 5, 6], [7, 8, 9, 10, 11, 12], [13, 14, 15, 16, 17, 18], [19, 20, 21, 22, 23, 24], [25, 26, 27, 28, 29, 30]]
   """
   import string
 
   max, field = puzzle
-  greenhouses = iter(string.uppercase)
+  id = 1
 
   result = []
   for line in field:
     _line = []
     for c in line:
       if c == "@":
-        _line += greenhouses.next()
+        _line.append(id)
+        id += 1
       else:
-        _line += c
+        _line.append(0)
 
-    result.append("".join(_line))
+    result.append(_line)
 
   return result
       
