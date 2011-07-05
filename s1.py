@@ -4,21 +4,26 @@ import doctest
 
 def solve1(puzzle):
   """
-  solve1 identifies all strawberries and proposes a simplistic solution.
+  solve1 identifies all strawberries and proposes a simplistic "solution".
+
+  The solution may or may not work depending on the number of strawberries
+  in the field and the max number of greenhouses.
 
   >>> solve1((1, ['.@@.', '.@@.', '.@@.']))
-  ['.AA.', '.AA.', '.AA.']
+  ['.AB.', '.CD.', '.EF.']
 
   >>> solve1((1, ['@..', '.@.', '..@']))
-  ['AAA', 'AAA', 'AAA']
+  ['A..', '.B.', '..C']
   """
   max, field = puzzle
+
+  greenhouses = iter("ABCDEF")
   result = []
   for line in field:
     _line = []
     for c in line:
       if c == "@":
-        _line += "A"
+        _line += greenhouses.next()
       else:
         _line += c
 
