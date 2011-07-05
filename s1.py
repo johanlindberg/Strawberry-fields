@@ -2,24 +2,23 @@
 
 import doctest
 
+def solve2(puzzle):
+  """
+  solve2 reduces the number of greenhouses by joining adjacent ones.
+
+  >>> solve2((1, [[0, 1, 2, 0], [0, 3, 4, 0], [0, 5, 6, 0]]))
+  [[0, 1, 1, 0], [0, 1, 1, 0], [0, 1, 1, 0]]
+  """
+  pass
+
 def solve1(puzzle):
   """
   solve1 identifies all strawberries and proposes a simplistic "solution".
 
-  The solution may or may not work depending on the number of strawberries
-  in the field and the max number of greenhouses.
-
-  >>> solve1((1, ['.@@.', '.@@.', '.@@.']))
-  [[0, 1, 2, 0], [0, 3, 4, 0], [0, 5, 6, 0]]
-
-  >>> solve1((1, ['@..', '.@.', '..@']))
-  [[1, 0, 0], [0, 2, 0], [0, 0, 3]]
-
-  >>> solve1((1, ['@@@@@@', '@@@@@@', '@@@@@@', '@@@@@@', '@@@@@@']))
-  [[1, 2, 3, 4, 5, 6], [7, 8, 9, 10, 11, 12], [13, 14, 15, 16, 17, 18], [19, 20, 21, 22, 23, 24], [25, 26, 27, 28, 29, 30]]
+  The solution is basically to propose one greenhouse/strawberry. This may
+  or may not work depending on the number of strawberries in the field and
+  the max number of greenhouses.
   """
-  import string
-
   max, field = puzzle
   id = 1
 
@@ -35,8 +34,7 @@ def solve1(puzzle):
 
     result.append(_line)
 
-  return result
-      
+  return result   
 
 def parse_file(filename):
   """
