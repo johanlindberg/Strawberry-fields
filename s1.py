@@ -39,8 +39,14 @@ def solve2(puzzle):
       if field[r][c] > 0:
         if start == -1:
           start = c
-        elif field[r][c] != field[r][c+1]:
+        elif field[r][c] != field[r][c+1] or \
+             ( field[r][c] == field[r][c+1] and c+1 == len(field[r]) - 1 ):
+
           stop = c
+          if field[r][c] == field[r][c+1] and \
+             c+1 == len(field[r]) - 1:
+            
+            stop += 1
 
           # if we end up here we've found a chain of greenhouses
           # if we find a similar chain in the row below we join
