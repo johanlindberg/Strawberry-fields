@@ -55,22 +55,28 @@ def solve2(puzzle):
           # if we find a similar chain in the row below we join
           # them, otherwise we leave them as they are (for now)
           
-          join = True
-          i = start
-          while i < stop:
-            if field[r+1][i] == 0 or \
-               field[r+1][i] != field[r+1][i+1]:
+          if start == 0 or \
+             field[r+1][start-1] != field[r+1][start]:
 
-              join = False
-              break
+            if stop == len(field[r]) - 1 or \
+               field[r+1][stop+1] != field[r+1][stop]:
+
+              join = True
+              i = start
+              while i < stop:
+                if field[r+1][i] == 0 or \
+                   field[r+1][i] != field[r+1][i+1]:
+
+                  join = False
+                  break
             
-            i += 1
+                i += 1
           
-          if join:
-            while start <= stop:
-              field[r+1][start] = field[r][start]
+              if join:
+                while start <= stop:
+                  field[r+1][start] = field[r][start]
 
-              start += 1
+                  start += 1
 
           start, stop = -1, -1
 
