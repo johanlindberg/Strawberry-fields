@@ -2,9 +2,25 @@
 
 import doctest
 
+def solve3(puzzle):
+  """
+  solve3 reduces the number of greenhouses further.
+
+  solve3 enforces the max constraint but can reduce the number even further
+  if that would end up with a lower overall cost.
+
+  >>> solve3((1, [[1, 2, 0, 0], [0, 3, 4, 0], [0, 0, 5, 6]]))
+  [[1, 1, 1, 1], [1, 1, 1, 1], [1, 1, 1, 1]]
+  """
+  pass
+
 def solve2(puzzle):
   """
   solve2 reduces the number of greenhouses by joining adjacent ones.
+
+  solve2 does not care about the max constraint, it does not care about the
+  cost of greenhouses. It merely joins greenhouses the lie next to each other.
+  The only constraint it enforces is that greenhouses have to be rectangular. 
 
   XXX This function needs some refactoring. It is too complex!
   """
