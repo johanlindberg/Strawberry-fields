@@ -2,6 +2,55 @@
 
 import doctest
 
+def join(g1, g2, field):
+  """
+  join expands greenhouse g1 until it contains g2 and then returns field.
+
+  >>> join(1, 3, [[1, 1, 0, 0], [0, 3, 3, 0], [0, 0, 5, 5]])
+  [[1, 1, 1, 0], [1, 1, 1, 0], [0, 0, 5, 5]]
+  """
+  _, (l,t), (r,b) = outer_bounds([g1, g2], field)
+  for ri in xrange(len(field)):
+    for ci in xrange(len(field[ri])):
+      if ci >= l and \
+         ci <= r and \
+         ri >= t and \
+         ri <= b:
+
+        field[ri][ci] = g1
+
+  return field
+
+def outer_bounds(gi, field):
+  """
+  outer_bounds returns the size and coordinates of the box(es) in <gi>.
+
+  <gi> can be a list or an int. If it is a list it returns the size and
+  coordinates of the box that contains all boxes specified in <gi>.
+
+  >>> outer_bounds(1, [[1, 1, 0, 0], [0, 3, 3, 0], [0, 0, 5, 5]])
+  (2, (0, 0), (1, 0))
+
+  >>> outer_bounds([1, 3], [[1, 1, 0, 0], [0, 3, 3, 0], [0, 0, 5, 5]])
+  (6, (0, 0), (2, 1))
+  """ 
+  if not isinstance(gi, list):
+    gi = [gi,]
+
+  l, r, t, b = 50, -1, 50, -1 # default values = max size of field
+
+  for ri in xrange(len(field)):
+    for ci in xrange(len(field[ri])):
+      cell = field[ri][ci]
+      if cell in gi:
+        if l > ci: l = ci
+        if r < ci: r = ci
+        if t > ri: t = ri
+        if b < ri: b = ri
+
+  size = (r-l+1) * (b-t+1)
+  return size, (l,t), (r,b)
+
 def solve3(puzzle):
   """
   solve3 reduces the number of greenhouses further.
@@ -9,10 +58,46 @@ def solve3(puzzle):
   solve3 enforces the max constraint but can reduce the number even further
   if that would end up with a lower overall cost.
 
-  >>> solve3((1, [[1, 2, 0, 0], [0, 3, 4, 0], [0, 0, 5, 6]]))
+  >>> solve3((1, [[1, 1, 0, 0], [0, 3, 3, 0], [0, 0, 5, 5]]))
   [[1, 1, 1, 1], [1, 1, 1, 1], [1, 1, 1, 1]]
   """
-  pass
+  import itertools
+  import sys
+
+  max, field = puzzle
+
+  # figure out the current number of greenhouses
+  greenhouses = []
+  for row in field:
+    for col in row:
+      if col > 0 and \
+         col not in greenhouses:
+
+        greenhouses.append(col)
+
+  # join greenhouses until max constraint is met
+  while len(greenhouses) > max:
+    j1, j2, js = 0, 0, sys.maxint
+    # try each combination of greenhouses
+    for g1, g2 in itertools.combinations(greenhouses, 2):
+      # find outer bounds (left, right, top and bottom) for a greenhouse made
+      # up of g1 and g2
+      size1, p11, p12 = outer_bounds(g1, field)
+      size2, p21, p22 = outer_bounds(g2, field)
+      size3, p31, p32 = outer_bounds([g1, g2], field)
+
+      diff = size3 - size2 - size1
+      if diff < js:
+        j1, j2, js = g1, g2, diff
+
+    # join j1 and j2, remove j2 from greenhouses
+    field = join(j1, j2, field)
+    greenhouses.remove(j2)
+  
+  # join greenhouses if it lowers cost
+
+  # XXX This part of the program reamins to be implemented!
+  return field
 
 def solve2(puzzle):
   """
