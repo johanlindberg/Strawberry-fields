@@ -4,10 +4,7 @@ import doctest
 
 def join(g1, g2, field):
   """
-  join expands greenhouse g1 until it contains g2 and then returns field.
-
-  >>> join(1, 3, [[1, 1, 0, 0], [0, 3, 3, 0], [0, 0, 5, 5]])
-  [[1, 1, 1, 0], [1, 1, 1, 0], [0, 0, 5, 5]]
+  join expands greenhouse <g1> in <field> until it contains <g2>.
   """
   _, (l,t), (r,b) = outer_bounds([g1, g2], field)
   for ri in xrange(len(field)):
@@ -27,12 +24,6 @@ def outer_bounds(gi, field):
 
   <gi> can be a list or an int. If it is a list it returns the size and
   coordinates of the box that contains all boxes specified in <gi>.
-
-  >>> outer_bounds(1, [[1, 1, 0, 0], [0, 3, 3, 0], [0, 0, 5, 5]])
-  (2, (0, 0), (1, 0))
-
-  >>> outer_bounds([1, 3], [[1, 1, 0, 0], [0, 3, 3, 0], [0, 0, 5, 5]])
-  (6, (0, 0), (2, 1))
   """ 
   if not isinstance(gi, list):
     gi = [gi,]
@@ -53,13 +44,7 @@ def outer_bounds(gi, field):
 
 def solve3(puzzle):
   """
-  solve3 reduces the number of greenhouses further.
-
-  solve3 enforces the max constraint but can reduce the number even further
-  if that would end up with a lower overall cost.
-
-  >>> solve3((1, [[1, 1, 0, 0], [0, 3, 3, 0], [0, 0, 5, 5]]))
-  [[1, 1, 1, 1], [1, 1, 1, 1], [1, 1, 1, 1]]
+  solve3 reduces the number of greenhouses until max constraint is met.
   """
   import itertools
   import sys
@@ -93,18 +78,15 @@ def solve3(puzzle):
     # join j1 and j2, remove j2 from greenhouses
     field = join(j1, j2, field)
     greenhouses.remove(j2)
-  
-  # join greenhouses if it lowers cost
 
-  # XXX This part of the program reamins to be implemented!
   return field
 
 def solve2(puzzle):
   """
   solve2 reduces the number of greenhouses by joining adjacent ones.
 
-  solve2 does not care about the max constraint, it does not care about the
-  cost of greenhouses. It merely joins greenhouses the lie next to each other.
+  solve2 does not care about the max constraint and it does not care about the
+  cost of greenhouses. It merely joins greenhouses that lie next to each other.
   The only constraint it enforces is that greenhouses have to be rectangular. 
 
   XXX This function needs some refactoring. It is too complex!
