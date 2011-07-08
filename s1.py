@@ -1,6 +1,8 @@
 ## Strawberry Fields
 
 import doctest
+import itertools
+import sys
 
 def join(g1, g2, field):
   """
@@ -46,8 +48,6 @@ def solve3(puzzle):
   """
   solve3 reduces the number of greenhouses until max constraint is met.
   """
-  import itertools
-  import sys
 
   max, field = puzzle
 
@@ -203,6 +203,24 @@ def parse_file(filename):
 
   return result 
 
+def solve(filename):
+  """
+  solve prints out solutions to each of the fields described in <filename>.
+  """
+  for puzzle in parse_file(filename):
+    max, field = solve3(solve2(solve1(puzzle)))
+
+    # XXX This part remains to be done
+    print max
+    for row in field:
+      print row
+
 if __name__ == "__main__":
   doctest.testmod()
   doctest.testfile("tests.text")
+
+  if len(sys.argv[1:]) > 0:
+    for f in sys.argv[1:]:
+      solve(f)
+
+
