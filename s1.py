@@ -4,6 +4,15 @@ import doctest
 import itertools
 import sys
 
+def cost(field):
+  """
+  cost calculates the total cost of all greenhouses in <field>.
+
+  >>> cost([[1, 1, 0, 0], [0, 3, 3, 0], [0, 0, 5, 5]]) == 10+1 + 10+1 + 10+1
+  True
+  """
+  pass
+
 def join(g1, g2, field):
   """
   join expands greenhouse <g1> in <field> until it contains <g2>.
