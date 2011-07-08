@@ -1,6 +1,9 @@
 This repository is mainly to hold some vacation python hacking on an ITA
-Software puzzle. Nothing to see here. Move along. At the time of writing this
-puzzle can be found at [ITA Software's career page](http://www.itasoftware.com/careers/work-at-ita/hiring-puzzles.html)
+Software puzzle.
+
+Nothing to see here... Move along.
+
+At the time of writing this puzzle can be found at [ITA Software's career page](http://www.itasoftware.com/careers/work-at-ita/hiring-puzzles.html)
 
 Strawberry fields
 -----------------
