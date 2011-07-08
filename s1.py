@@ -79,7 +79,7 @@ def solve3(puzzle):
     field = join(j1, j2, field)
     greenhouses.remove(j2)
 
-  return field
+  return max, field
 
 def solve2(puzzle):
   """
@@ -147,7 +147,7 @@ def solve2(puzzle):
 
           start, stop = -1, -1
 
-  return field
+  return max, field
 
 def solve1(puzzle):
   """
