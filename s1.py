@@ -4,14 +4,41 @@ import doctest
 import itertools
 import sys
 
+def ids(field):
+  """
+  ids returns a list of greenhouse ids in <field>.
+
+  >>> ids([[1, 1, 0, 0], [0, 3, 3, 0], [0, 0, 5, 5]])
+  [1, 3, 5]
+  """
+  ids = []
+  for row in field:
+    for col in row:
+      if col > 0 and \
+         col not in ids:
+
+        ids.append(col)
+
+  return ids
+
 def cost(field):
   """
   cost calculates the total cost of all greenhouses in <field>.
 
-  >>> cost([[1, 1, 0, 0], [0, 3, 3, 0], [0, 0, 5, 5]]) == 10+1 + 10+1 + 10+1
-  True
+  >>> cost([[1, 1, 0, 0], [0, 3, 3, 0], [0, 0, 5, 5]]) # cost = 10+2 + 10+2 + 10+2
+  36
+
+  >>> cost([[1, 1, 1, 0], [1, 1, 1, 0], [0, 0, 5, 5]]) # cost = 10+6 + 10+2
+  28
   """
-  pass
+  greenhouses = ids(field)
+
+  cost = 0
+  for g in greenhouses:
+    size, _, _ = outer_bounds(g, field)
+    cost += 10 + size
+
+  return cost
 
 def join(g1, g2, field):
   """
@@ -57,17 +84,10 @@ def solve3(puzzle):
   """
   solve3 reduces the number of greenhouses until max constraint is met.
   """
-
   max, field = puzzle
 
   # figure out the current number of greenhouses
-  greenhouses = []
-  for row in field:
-    for col in row:
-      if col > 0 and \
-         col not in greenhouses:
-
-        greenhouses.append(col)
+  greenhouses = ids(field)
 
   # join greenhouses until max constraint is met
   while len(greenhouses) > max:
