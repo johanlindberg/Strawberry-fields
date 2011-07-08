@@ -160,19 +160,19 @@ def solve1(puzzle):
   max, field = puzzle
   id = 1
 
-  result = []
-  for line in field:
-    _line = []
-    for c in line:
+  _field = []
+  for row in field:
+    _row = []
+    for c in row:
       if c == "@":
-        _line.append(id)
+        _row.append(id)
         id += 1
       else:
-        _line.append(0)
+        _row.append(0)
 
-    result.append(_line)
+    _field.append(_row)
 
-  return result   
+  return max, _field 
 
 def parse_file(filename):
   """
