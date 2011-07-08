@@ -2,6 +2,7 @@
 
 import doctest
 import itertools
+import string
 import sys
 
 def ids(field):
@@ -239,10 +240,22 @@ def solve(filename):
   for puzzle in parse_file(filename):
     max, field = solve3(solve2(solve1(puzzle)))
 
-    # XXX This part remains to be done
-    print max
+    print cost(field)
+
+    # prepare field for printing
+    ng = iter(string.uppercase)
+    greenhouses = ids(field)
+    for g in greenhouses:
+      gid = ng.next()
+      for ri in xrange(len(field)):
+        for ci in xrange(len(field[ri])):
+          if field[ri][ci] == 0:
+            field[ri][ci] = "."
+          elif field[ri][ci] == g:
+            field[ri][ci] = gid
+
     for row in field:
-      print row
+      print "".join(row)
 
 if __name__ == "__main__":
   doctest.testmod()
