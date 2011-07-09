@@ -7,7 +7,7 @@ import sys
 
 def ids(field):
   """
-  ids returns a list of greenhouse ids in <field>.
+  ids returns a list of greenhouse identities in <field>.
   """
   ids = []
   for row in field:
@@ -115,27 +115,27 @@ def solve2(puzzle):
   max, field = puzzle
   
   # join greenhouses horizontally
-  for r in xrange(len(field)):
-    for c in xrange(len(field[r]) - 1):
-      if field[r][c] > 0 and \
-         field[r][c+1] > 0 and \
-         field[r][c] != field[r][c+1]:
+  for ri in xrange(len(field)):
+    for ci in xrange(len(field[ri]) - 1):
+      if field[ri][ci] > 0 and \
+         field[ri][ci+1] > 0 and \
+         field[ri][ci] != field[ri][ci+1]:
 
-        field[r][c+1] = field[r][c]
+        field[ri][ci+1] = field[ri][ci]
 
   # join greenhouses vertically
-  for r in xrange(len(field) - 1):
+  for ri in xrange(len(field) - 1):
     start, stop = -1, -1
-    for c in xrange(len(field[r]) - 1):
-      if field[r][c] > 0:
+    for ci in xrange(len(field[ri]) - 1):
+      if field[ri][ci] > 0:
         if start == -1:
-          start = c
-        elif field[r][c] != field[r][c+1] or \
-             ( field[r][c] == field[r][c+1] and c+1 == len(field[r]) - 1 ):
+          start = ci
+        elif field[ri][ci] != field[ri][ci+1] or \
+             ( field[ri][ci] == field[ri][ci+1] and ci+1 == len(field[ri]) - 1 ):
 
-          stop = c
-          if field[r][c] == field[r][c+1] and \
-             c+1 == len(field[r]) - 1:
+          stop = ci
+          if field[ri][ci] == field[ri][ci+1] and \
+             ci+1 == len(field[ri]) - 1:
             
             stop += 1
 
@@ -144,16 +144,16 @@ def solve2(puzzle):
           # them, otherwise we leave them as they are (for now)
           
           if start == 0 or \
-             field[r+1][start-1] != field[r+1][start]:
+             field[ri+1][start-1] != field[ri+1][start]:
 
-            if stop == len(field[r]) - 1 or \
-               field[r+1][stop+1] != field[r+1][stop]:
+            if stop == len(field[ri]) - 1 or \
+               field[ri+1][stop+1] != field[ri+1][stop]:
 
               join = True
               i = start
               while i < stop:
-                if field[r+1][i] == 0 or \
-                   field[r+1][i] != field[r+1][i+1]:
+                if field[ri+1][i] == 0 or \
+                   field[ri+1][i] != field[ri+1][i+1]:
 
                   join = False
                   break
@@ -162,7 +162,7 @@ def solve2(puzzle):
           
               if join:
                 while start <= stop:
-                  field[r+1][start] = field[r][start]
+                  field[ri+1][start] = field[ri][start]
 
                   start += 1
 
