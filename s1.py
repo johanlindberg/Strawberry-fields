@@ -110,9 +110,6 @@ def solve2(puzzle):
   cost of greenhouses. It merely joins greenhouses that lie next to each other.
   The only constraint it enforces is that greenhouses have to be rectangular. 
  
-  >>> solve2((1, [[1, 2, 3, 0], [4, 5, 6, 7], [0, 8, 9,10]]))
-  (1, [[1, 1, 1, 0], [4, 5, 5, 7], [0, 8, 8, 8]])
-
   XXX This function needs some refactoring. It is too complex!
   """
   max, field = puzzle
@@ -124,7 +121,10 @@ def solve2(puzzle):
          field[ri][ci+1] > 0 and \
          field[ri][ci] != field[ri][ci+1]:
 
-        field[ri][ci+1] = field[ri][ci]
+        if ri == 0 or \
+           field[ri-1][ci] == field[ri-1][ci+1]:
+
+          field[ri][ci+1] = field[ri][ci]
 
   # join greenhouses vertically
   for ri in xrange(len(field) - 1):
