@@ -109,6 +109,9 @@ def solve2(puzzle):
   solve2 does not care about the max constraint and it does not care about the
   cost of greenhouses. It merely joins greenhouses that lie next to each other.
   The only constraint it enforces is that greenhouses have to be rectangular. 
+ 
+  >>> solve2((1, [[1, 2, 3, 0], [4, 5, 6, 7], [0, 8, 9,10]]))
+  (1, [[1, 1, 1, 0], [4, 5, 5, 7], [0, 8, 8, 8]])
 
   XXX This function needs some refactoring. It is too complex!
   """
@@ -229,7 +232,8 @@ def solve(filename):
   solve prints out solutions to each of the fields described in <filename>.
   """
   for puzzle in parse_file(filename):
-    max, field = solve3(solve2(solve1(puzzle)))
+#    max, field = solve3(solve2(solve1(puzzle)))
+    max, field = solve2(solve1(puzzle))
 
     print cost(field)
 
