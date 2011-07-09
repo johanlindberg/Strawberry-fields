@@ -8,9 +8,6 @@ import sys
 def ids(field):
   """
   ids returns a list of greenhouse ids in <field>.
-
-  >>> ids([[1, 1, 0, 0], [0, 3, 3, 0], [0, 0, 5, 5]])
-  [1, 3, 5]
   """
   ids = []
   for row in field:
@@ -25,12 +22,6 @@ def ids(field):
 def cost(field):
   """
   cost calculates the total cost of all greenhouses in <field>.
-
-  >>> cost([[1, 1, 0, 0], [0, 3, 3, 0], [0, 0, 5, 5]]) # cost = 10+2 + 10+2 + 10+2
-  36
-
-  >>> cost([[1, 1, 1, 0], [1, 1, 1, 0], [0, 0, 5, 5]]) # cost = 10+6 + 10+2
-  28
   """
   greenhouses = ids(field)
 
@@ -256,6 +247,8 @@ def solve(filename):
 
     for row in field:
       print "".join(row)
+
+    print
 
 if __name__ == "__main__":
   doctest.testmod()
