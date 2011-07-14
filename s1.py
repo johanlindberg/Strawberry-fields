@@ -113,7 +113,7 @@ def solve2(puzzle):
   
   # join greenhouses horizontally
 
-  hz_segments = []
+  segments = []
   # find the horizontal border segments
   for ri in xrange(len(field)):
     for ci in xrange(len(field[ri]) - 1):
@@ -122,8 +122,8 @@ def solve2(puzzle):
          ( field[ri][ci] > 0 and \
            field[ri][ci+1] == 0 ):
 
-        if not ci+1 in hz_segments:
-          hz_segments.append(ci+1)
+        if not ci+1 in segments:
+          segments.append(ci+1)
 
   # join greenhouses
   for ri in xrange(len(field)):
@@ -132,7 +132,7 @@ def solve2(puzzle):
          field[ri][ci+1] > 0 and \
          field[ri][ci] != field[ri][ci+1]:
 
-        if ci+1 not in hz_segments:
+        if ci+1 not in segments:
           field[ri][ci+1] = field[ri][ci]
 
   return max, field
@@ -166,57 +166,6 @@ def solve3(puzzle):
 
         if ri+1 not in segments:
           field[ri+1][ci] = field[ri][ci]
-
-  return max, field
-
-def solve2_backup():
-  """
-  XXX TBD!
-  """
-  # join greenhouses vertically
-  for ri in xrange(len(field) - 1):
-    start, stop = -1, -1
-    for ci in xrange(len(field[ri]) - 1):
-      if field[ri][ci] > 0:
-        if start == -1:
-          start = ci
-        elif field[ri][ci] != field[ri][ci+1] or \
-             ( field[ri][ci] == field[ri][ci+1] and ci+1 == len(field[ri]) - 1 ):
-
-          stop = ci
-          if field[ri][ci] == field[ri][ci+1] and \
-             ci+1 == len(field[ri]) - 1:
-            
-            stop += 1
-
-          # if we end up here we've found a chain of greenhouses
-          # if we find a similar chain in the row below we join
-          # them, otherwise we leave them as they are (for now)
-          
-          if start == 0 or \
-             field[ri+1][start-1] != field[ri+1][start]:
-
-            if stop == len(field[ri]) - 1 or \
-               field[ri+1][stop+1] != field[ri+1][stop]:
-
-              join = True
-              i = start
-              while i < stop:
-                if field[ri+1][i] == 0 or \
-                   field[ri+1][i] != field[ri+1][i+1]:
-
-                  join = False
-                  break
-            
-                i += 1
-          
-              if join:
-                while start <= stop:
-                  field[ri+1][start] = field[ri][start]
-
-                  start += 1
-
-          start, stop = -1, -1
 
   return max, field
 
