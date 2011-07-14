@@ -223,6 +223,27 @@ def parse_file(filename):
 
   return result 
 
+def format(field):
+  """
+  format makes a string representation of field suitable for printing.
+  """
+  ng = iter(string.uppercase)
+  greenhouses = ids(field)
+  for g in greenhouses:
+    gid = ng.next()
+    for ri in xrange(len(field)):
+      for ci in xrange(len(field[ri])):
+        if field[ri][ci] == 0:
+          field[ri][ci] = "."
+        elif field[ri][ci] == g:
+          field[ri][ci] = gid
+
+  result = ""
+  for row in field:
+    result += "".join(row) + "\n"
+
+  return result
+
 def solve(filename):
   """
   solve prints out solutions to each of the fields described in <filename>.
@@ -231,23 +252,7 @@ def solve(filename):
     max, field = solve4(solve3(solve2(solve1(puzzle))))
 
     print cost(field)
-
-    # prepare field for printing
-    ng = iter(string.uppercase)
-    greenhouses = ids(field)
-    for g in greenhouses:
-      gid = ng.next()
-      for ri in xrange(len(field)):
-        for ci in xrange(len(field[ri])):
-          if field[ri][ci] == 0:
-            field[ri][ci] = "."
-          elif field[ri][ci] == g:
-            field[ri][ci] = gid
-
-    for row in field:
-      print "".join(row)
-
-    print
+    print format(field)
 
 if __name__ == "__main__":
   doctest.testmod()
