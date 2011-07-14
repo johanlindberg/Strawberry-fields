@@ -137,7 +137,15 @@ def solve2(puzzle):
 
   return max, field
 
-def solve3():
+def solve3(puzzle):
+  """
+  solve3 reduces the number of greenhouses by joining vertically adjacent ones.
+
+  It is basically the same function as solve2.
+  """
+  pass
+
+def solve2_backup():
   """
   XXX TBD!
   """
