@@ -143,7 +143,31 @@ def solve3(puzzle):
 
   It is basically the same function as solve2.
   """
-  pass
+  max, field = puzzle
+  
+  segments = []
+  # find the vertical border segments
+  for ci in xrange(len(field[0])):
+    for ri in xrange(len(field) - 1):
+      if ( field[ri][ci] == 0 and \
+           field[ri+1][ci] > 0 ) or \
+         ( field[ri][ci] > 0 and \
+           field[ri+1][ci] == 0 ):
+
+        if not ri+1 in segments:
+          segments.append(ri+1)
+
+  # join greenhouses
+  for ci in xrange(len(field[0])):
+    for ri in xrange(len(field) - 1):
+      if field[ri][ci] > 0 and \
+         field[ri+1][ci] > 0 and \
+         field[ri][ci] != field[ri+1][ci]:
+
+        if ri+1 not in segments:
+          field[ri+1][ci] = field[ri][ci]
+
+  return max, field
 
 def solve2_backup():
   """
