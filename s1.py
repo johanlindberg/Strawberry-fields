@@ -72,9 +72,9 @@ def outer_bounds(gi, field):
   size = (r-l+1) * (b-t+1)
   return size, (l,t), (r,b)
 
-def solve3(puzzle):
+def solve4(puzzle):
   """
-  solve3 reduces the number of greenhouses until max constraint is met.
+  solve4 reduces the number of greenhouses until max constraint is met.
   """
   max, field = puzzle
 
@@ -104,28 +104,43 @@ def solve3(puzzle):
 
 def solve2(puzzle):
   """
-  solve2 reduces the number of greenhouses by joining adjacent ones.
+  solve2 reduces the number of greenhouses by joining horizontally adjacent ones.
 
   solve2 does not care about the max constraint and it does not care about the
   cost of greenhouses. It merely joins greenhouses that lie next to each other.
-  The only constraint it enforces is that greenhouses have to be rectangular. 
- 
-  XXX This function needs some refactoring. It is too complex!
   """
   max, field = puzzle
   
   # join greenhouses horizontally
+
+  hz_segments = []
+  # find the horizontal border segments
+  for ri in xrange(len(field)):
+    for ci in xrange(len(field[ri]) - 1):
+      if ( field[ri][ci] == 0 and \
+           field[ri][ci+1] > 0 ) or \
+         ( field[ri][ci] > 0 and \
+           field[ri][ci+1] == 0 ):
+
+        if not ci+1 in hz_segments:
+          hz_segments.append(ci+1)
+
+  # join greenhouses
   for ri in xrange(len(field)):
     for ci in xrange(len(field[ri]) - 1):
       if field[ri][ci] > 0 and \
          field[ri][ci+1] > 0 and \
          field[ri][ci] != field[ri][ci+1]:
 
-        if ri == 0 or \
-           field[ri-1][ci] == field[ri-1][ci+1]:
-
+        if ci+1 not in hz_segments:
           field[ri][ci+1] = field[ri][ci]
 
+  return max, field
+
+def solve3():
+  """
+  XXX TBD!
+  """
   # join greenhouses vertically
   for ri in xrange(len(field) - 1):
     start, stop = -1, -1
