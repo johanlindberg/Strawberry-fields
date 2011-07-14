@@ -228,8 +228,7 @@ def solve(filename):
   solve prints out solutions to each of the fields described in <filename>.
   """
   for puzzle in parse_file(filename):
-#    max, field = solve3(solve2(solve1(puzzle)))
-    max, field = solve2(solve1(puzzle))
+    max, field = solve4(solve3(solve2(solve1(puzzle))))
 
     print cost(field)
 
