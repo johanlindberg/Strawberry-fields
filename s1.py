@@ -1,5 +1,6 @@
 ## Strawberry Fields
 
+import copy
 import doctest
 import itertools
 import string
@@ -223,10 +224,11 @@ def parse_file(filename):
 
   return result 
 
-def format(field):
+def format(_field):
   """
   format makes a string representation of field suitable for printing.
   """
+  field = copy.deepcopy(_field)
   ng = iter(string.uppercase)
   greenhouses = ids(field)
   for g in greenhouses:
