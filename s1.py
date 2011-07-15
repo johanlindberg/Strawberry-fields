@@ -70,6 +70,12 @@ def outer_bounds(gi, field):
         if t > ri: t = ri
         if b < ri: b = ri
 
+  for ri in xrange(t, b+1):
+    for ci in xrange(l, r+1):
+      if field[ri][ci] > 0 and \
+         field[ri][ci] not in gi:
+        return None, (l,t), (r,b)
+
   size = (r-l+1) * (b-t+1)
   return size, (l,t), (r,b)
 
@@ -93,9 +99,10 @@ def solve4(puzzle):
       size2, p21, p22 = outer_bounds(g2, field)
       size3, p31, p32 = outer_bounds([g1, g2], field)
 
-      diff = size3 - size2 - size1
-      if diff < js:
-        j1, j2, js = g1, g2, diff
+      if size3 is not None:
+        diff = size3 - size2 - size1
+        if diff < js:
+          j1, j2, js = g1, g2, diff
 
     # join j1 and j2, remove j2 from greenhouses
     field = join(j1, j2, field)
