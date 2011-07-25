@@ -79,9 +79,9 @@ def outer_bounds(gi, field):
   size = (r-l+1) * (b-t+1)
   return size, (l,t), (r,b)
 
-def solve4(puzzle):
+def simple_search(puzzle):
   """
-  solve4 reduces the number of greenhouses until max constraint is met.
+  simple_search reduces the number of greenhouses until max constraint is met.
   """
   max, field = puzzle
 
@@ -110,17 +110,16 @@ def solve4(puzzle):
 
   return max, field
 
-def solve2(puzzle):
+def join_horizontally(puzzle):
   """
-  solve2 reduces the number of greenhouses by joining horizontally adjacent ones.
+  join_horizontally reduces the number of greenhouses by joining adjacent ones.
 
-  solve2 does not care about the max constraint and it does not care about the
-  cost of greenhouses. It merely joins greenhouses that lie next to each other.
+  join_horizontally does not care about the max constraint and it does not care
+  about the cost of greenhouses. It merely joins greenhouses that lie next to
+  each other.
   """
   max, field = puzzle
   
-  # join greenhouses horizontally
-
   segments = []
   # find the horizontal border segments
   for ri in xrange(len(field)):
@@ -145,11 +144,11 @@ def solve2(puzzle):
 
   return max, field
 
-def solve3(puzzle):
+def join_vertically(puzzle):
   """
-  solve3 reduces the number of greenhouses by joining vertically adjacent ones.
+  join_vertically reduces the number of greenhouses by joining vertically adjacent ones.
 
-  It is basically the same function as solve2.
+  It is basically the same function as join_horizontally.
   """
   max, field = puzzle
   
@@ -177,13 +176,9 @@ def solve3(puzzle):
 
   return max, field
 
-def solve1(puzzle):
+def identify(puzzle):
   """
-  solve1 identifies all strawberries and proposes a simplistic "solution".
-
-  The solution is basically to propose one greenhouse/strawberry. This may
-  or may not work depending on the number of strawberries in the field and
-  the max number of greenhouses.
+  Identifies and enumerates all strawberries.
   """
   max, field = puzzle
   id = 1
@@ -258,7 +253,7 @@ def solve(filename):
   solve prints out solutions to each of the fields described in <filename>.
   """
   for puzzle in parse_file(filename):
-    max, field = solve4(solve3(solve2(solve1(puzzle))))
+    max, field = simple_search(join_vertically(join_horizontally(identify(puzzle))))
 
     print cost(field)
     print format(field)
