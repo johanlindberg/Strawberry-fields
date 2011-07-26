@@ -111,13 +111,13 @@ A more complicated one (diagonal):
 >>> join_vertically((1, [[1, 2, 0, 0], [0, 3, 4, 0], [0, 0, 5, 6]]))
 (1, [[1, 2, 0, 0], [0, 3, 4, 0], [0, 0, 5, 6]])
 
-Tests for simple_search
+Tests for simple_reduction
 ----------------
 
->>> simple_search((1, [[1, 1, 0, 0], [0, 3, 3, 0], [0, 0, 5, 5]]))
+>>> simple_reduction((1, [[1, 1, 0, 0], [0, 3, 3, 0], [0, 0, 5, 5]]))
 (1, [[1, 1, 1, 1], [1, 1, 1, 1], [1, 1, 1, 1]])
 
->>> simple_search((2, [[1, 1, 0, 0], [0, 3, 3, 0], [0, 0, 5, 5]]))
+>>> simple_reduction((2, [[1, 1, 0, 0], [0, 3, 3, 0], [0, 0, 5, 5]]))
 (2, [[1, 1, 1, 0], [1, 1, 1, 0], [0, 0, 5, 5]])
 
 Tests for outer_bounds

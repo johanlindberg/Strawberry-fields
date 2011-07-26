@@ -79,9 +79,9 @@ def outer_bounds(gi, field):
   size = (r-l+1) * (b-t+1)
   return size, (l,t), (r,b)
 
-def simple_search(puzzle):
+def simple_reduction(puzzle):
   """
-  simple_search reduces the number of greenhouses until max constraint is met.
+  simple_reduction reduces greenhouses until max constraint is met.
   """
   max, field = puzzle
 
@@ -253,7 +253,7 @@ def solve(filename):
   solve prints out solutions to each of the fields described in <filename>.
   """
   for puzzle in parse_file(filename):
-    max, field = simple_search(join_vertically(join_horizontally(identify(puzzle))))
+    max, field = simple_reduction(join_vertically(join_horizontally(identify(puzzle))))
 
     print cost(field)
     print format(field)
