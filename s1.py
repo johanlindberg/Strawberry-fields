@@ -12,8 +12,16 @@ def flip_hz(field):
 
   >>> flip_hz([[1, 2, 3], [4, 5, 6], [7, 8, 9]])
   [[3, 2, 1], [6, 5, 4], [9, 8, 7]]
+
+  >>> flip_hz(flip_hz([[1, 2, 3], [4, 5, 6], [7, 8, 9]]))
+  [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
   """
-  pass
+  result = []
+  for row in field:
+    row.reverse()
+    result.append(row)
+
+  return result
 
 def ids(field):
   """
