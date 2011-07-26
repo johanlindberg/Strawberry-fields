@@ -13,8 +13,19 @@ def rotate(field):
   >>> rotate([[1, 2, 3], [4, 5, 6], [7, 8, 9]])
   [[3, 6, 9], [2, 5, 8], [1, 4, 7]]
   """
-  pass
+  result = []
 
+  width, height = len(field[0]), len(field)
+  row = [0] * height
+  for w in xrange(width):
+    result.append(copy.deepcopy(row))
+
+  for ri in xrange(len(field)):
+    field[ri].reverse()
+    for ci in xrange(len(field[ri])):
+      result[ci][ri] = field[ri][ci]
+
+  return result
 
 def flip_vt(field):
   """
