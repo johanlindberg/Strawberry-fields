@@ -14,7 +14,25 @@ def variant_reduction(puzzle):
   >>> cost(f)
   90
   """
-  pass
+  max, field = puzzle
+  
+  # there are 8 variations to each puzzle
+  v1 = field
+  v2 = flip_hz(copy.deepcopy(v1))
+  v3 = flip_vt(copy.deepcopy(v1))
+  v4 = flip_vt(flip_hz(copy.deepcopy(v1)))
+  v5 = rotate(copy.deepcopy(field))
+  v6 = flip_hz(copy.deepcopy(v5))
+  v7 = flip_vt(copy.deepcopy(v5))
+  v8 = flip_vt(flip_hz(copy.deepcopy(v5)))
+
+  best_cost, best_field = sys.maxint, None
+  for f in [v1, v2, v3, v4, v5, v6, v7, v8]:
+    _, _field = simple_reduction((max, f))
+    if cost(_field) < best_cost:
+      best_cost, best_field = cost(_field), _field
+
+  return max, best_field
 
 def rotate(field):
   """
