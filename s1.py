@@ -18,22 +18,30 @@ def variant_reduction(puzzle):
   """
   max, field = puzzle
   
-  # there are 8 variations to each puzzle
-  v1 = field
-  v2 = flip_hz(copy.deepcopy(v1))
-  v3 = flip_vt(copy.deepcopy(v1))
-  v4 = flip_vt(flip_hz(copy.deepcopy(v1)))
-  v5 = rotate(copy.deepcopy(field))
-  v6 = flip_hz(copy.deepcopy(v5))
-  v7 = flip_vt(copy.deepcopy(v5))
-  v8 = flip_vt(flip_hz(copy.deepcopy(v5)))
+  # there are 8 variations to each puzzle, these 4 + 4 rotated ones
+  variants = [lambda f: f, lambda f: flip_hz(f), lambda f: flip_vt(f), lambda f: flip_vt(flip_hz(f))]
+  rotated_field = rotate(copy.deepcopy(field))
+
   best_cost, best_field = sys.maxint, None
-  for f in [v1, v2, v3, v4, v5, v6, v7, v8]:
-    _, _field = simple_reduction((max, f))
+  for vi in xrange(4):
+    _, _field = simple_reduction((max, variants[vi](copy.deepcopy(field))))
     if cost(_field) < best_cost:
-      best_cost, best_field = cost(_field), _field
+      best_cost, best_field = cost(_field), variants[vi](_field)
+
+    _, _field = simple_reduction((max, variants[vi](copy.deepcopy(rotated_field))))
+    if cost(_field) < best_cost:
+      best_cost, best_field = cost(_field), unrotate(variants[vi](_field))
 
   return max, best_field
+
+def unrotate(field):
+  """
+  unrotate undo the effects of rotate on <field>.
+
+  >>> unrotate(rotate([[1, 2, 3], [4, 5, 6], [7, 8, 9]]))
+  [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
+  """
+  return flip_hz(flip_vt(rotate(field)))
 
 def rotate(field):
   """
