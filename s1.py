@@ -12,8 +12,12 @@ def flip_vt(field):
 
   >>> flip_vt([[1, 2, 3], [4, 5, 6], [7, 8, 9]])
   [[7, 8, 9], [4, 5, 6], [1, 2, 3]]
+
+  >>> flip_vt(flip_vt([[1, 2, 3], [4, 5, 6], [7, 8, 9]]))
+  [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
   """
-  pass
+  field.reverse()
+  return field
 
 def flip_hz(field):
   """
