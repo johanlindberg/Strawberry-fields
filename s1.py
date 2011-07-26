@@ -6,6 +6,15 @@ import itertools
 import string
 import sys
 
+def flip_hz(field):
+  """
+  flip_hz flips <field> horizontally.
+
+  >>> flip_hz([[1, 2, 3], [4, 5, 6], [7, 8, 9]])
+  [[3, 2, 1], [6, 5, 4], [9, 8, 7]]
+  """
+  pass
+
 def ids(field):
   """
   ids returns a list of greenhouse identities in <field>.
@@ -124,6 +133,7 @@ def simple_reduction(puzzle):
 
     prev_field, prev_cost = copy.deepcopy(field), curr_cost
 
+  # if we end up here, we've come down to 1 greenhouse
   return max, field
 
 def join_horizontally(puzzle):
