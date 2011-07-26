@@ -6,6 +6,16 @@ import itertools
 import string
 import sys
 
+def rotate(field):
+  """
+  rotates <field> 90 degrees.
+
+  >>> rotate([[1, 2, 3], [4, 5, 6], [7, 8, 9]])
+  [[3, 6, 9], [2, 5, 8], [1, 4, 7]]
+  """
+  pass
+
+
 def flip_vt(field):
   """
   flip_vt flips <field> vertically.
