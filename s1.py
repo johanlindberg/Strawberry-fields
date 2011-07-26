@@ -13,6 +13,8 @@ def variant_reduction(puzzle):
   >>> _, f = variant_reduction((4, [[0, 0, 1, 1, 1, 4, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 6, 6, 6, 9, 9, 11, 0, 0, 0, 0, 0, 0, 0, 0, 12, 12, 12, 0, 0, 0], [0, 0, 0, 0, 0, 15, 15, 17, 18, 19, 0, 0, 0, 0, 0, 0, 20, 20, 20, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 23, 24, 25, 26, 26, 26, 26, 30, 30, 32, 32, 32, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 35, 36, 36, 36, 36, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 35, 36, 36, 36, 36, 0, 0, 0, 0, 0, 0, 0, 0]]))
   >>> cost(f)
   90
+  >>> format(f)
+  '..AAAAAAAA............\\n..AAAAAAAA......BBB...\\n..AAAAAAAA......BBB...\\n.......CCCCCCCCCBBB...\\n.......CCCCCCCCC......\\n.......CCCCCCCCC......\\n'
   """
   max, field = puzzle
   
@@ -25,7 +27,6 @@ def variant_reduction(puzzle):
   v6 = flip_hz(copy.deepcopy(v5))
   v7 = flip_vt(copy.deepcopy(v5))
   v8 = flip_vt(flip_hz(copy.deepcopy(v5)))
-
   best_cost, best_field = sys.maxint, None
   for f in [v1, v2, v3, v4, v5, v6, v7, v8]:
     _, _field = simple_reduction((max, f))
@@ -355,8 +356,6 @@ def solve(filename):
   """
   for puzzle in parse_file(filename):
     max, field = simple_reduction(join_vertically(join_horizontally(identify(puzzle))))
-
-    print join_vertically(join_horizontally(identify(puzzle)))
 
     print cost(field)
     print format(field)
