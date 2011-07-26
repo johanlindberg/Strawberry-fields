@@ -6,6 +6,15 @@ import itertools
 import string
 import sys
 
+def flip_vt(field):
+  """
+  flip_vt flips <field> vertically.
+
+  >>> flip_vt([[1, 2, 3], [4, 5, 6], [7, 8, 9]])
+  [[7, 8, 9], [4, 5, 6], [1, 2, 3]]
+  """
+  pass
+
 def flip_hz(field):
   """
   flip_hz flips <field> horizontally.
