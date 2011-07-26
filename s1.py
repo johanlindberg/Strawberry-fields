@@ -12,14 +12,19 @@ def rotate(field):
 
   >>> rotate([[1, 2, 3], [4, 5, 6], [7, 8, 9]])
   [[3, 6, 9], [2, 5, 8], [1, 4, 7]]
+
+  >>> rotate([[1, 2, 3, 4], [5, 6, 7, 8], [9, 10, 11, 12]])
+  [[4, 8, 12], [3, 7, 11], [2, 6, 10], [1, 5, 9]]
   """
   result = []
 
+  # make the resulting structure
   width, height = len(field[0]), len(field)
   row = [0] * height
   for w in xrange(width):
     result.append(copy.deepcopy(row))
 
+  # copy data from field to result
   for ri in xrange(len(field)):
     field[ri].reverse()
     for ci in xrange(len(field[ri])):
