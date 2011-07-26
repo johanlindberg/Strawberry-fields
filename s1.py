@@ -9,12 +9,6 @@ import sys
 def variant_reduction(puzzle):
   """
   variant_reduction flips and rotates <puzzle> to find a better solution.
-
-  >>> _, f = variant_reduction((4, [[0, 0, 1, 1, 1, 4, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 6, 6, 6, 9, 9, 11, 0, 0, 0, 0, 0, 0, 0, 0, 12, 12, 12, 0, 0, 0], [0, 0, 0, 0, 0, 15, 15, 17, 18, 19, 0, 0, 0, 0, 0, 0, 20, 20, 20, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 23, 24, 25, 26, 26, 26, 26, 30, 30, 32, 32, 32, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 35, 36, 36, 36, 36, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 35, 36, 36, 36, 36, 0, 0, 0, 0, 0, 0, 0, 0]]))
-  >>> cost(f)
-  90
-  >>> format(f)
-  '..AAAAAAAA............\\n..AAAAAAAA......BBB...\\n..AAAAAAAA......BBB...\\n.......CCCCCCCCCBBB...\\n.......CCCCCCCCC......\\n.......CCCCCCCCC......\\n'
   """
   max, field = puzzle
   
@@ -37,21 +31,12 @@ def variant_reduction(puzzle):
 def unrotate(field):
   """
   unrotate undo the effects of rotate on <field>.
-
-  >>> unrotate(rotate([[1, 2, 3], [4, 5, 6], [7, 8, 9]]))
-  [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
   """
   return flip_hz(flip_vt(rotate(field)))
 
 def rotate(field):
   """
   rotates <field> 90 degrees.
-
-  >>> rotate([[1, 2, 3], [4, 5, 6], [7, 8, 9]])
-  [[3, 6, 9], [2, 5, 8], [1, 4, 7]]
-
-  >>> rotate([[1, 2, 3, 4], [5, 6, 7, 8], [9, 10, 11, 12]])
-  [[4, 8, 12], [3, 7, 11], [2, 6, 10], [1, 5, 9]]
   """
   result = []
 
@@ -72,12 +57,6 @@ def rotate(field):
 def flip_vt(field):
   """
   flip_vt flips <field> vertically.
-
-  >>> flip_vt([[1, 2, 3], [4, 5, 6], [7, 8, 9]])
-  [[7, 8, 9], [4, 5, 6], [1, 2, 3]]
-
-  >>> flip_vt(flip_vt([[1, 2, 3], [4, 5, 6], [7, 8, 9]]))
-  [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
   """
   field.reverse()
   return field
@@ -85,12 +64,6 @@ def flip_vt(field):
 def flip_hz(field):
   """
   flip_hz flips <field> horizontally.
-
-  >>> flip_hz([[1, 2, 3], [4, 5, 6], [7, 8, 9]])
-  [[3, 2, 1], [6, 5, 4], [9, 8, 7]]
-
-  >>> flip_hz(flip_hz([[1, 2, 3], [4, 5, 6], [7, 8, 9]]))
-  [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
   """
   result = []
   for row in field:
@@ -363,7 +336,7 @@ def solve(filename):
   solve prints out solutions to each of the fields described in <filename>.
   """
   for puzzle in parse_file(filename):
-    max, field = simple_reduction(join_vertically(join_horizontally(identify(puzzle))))
+    max, field = variant_reduction(join_vertically(join_horizontally(identify(puzzle))))
 
     print cost(field)
     print format(field)
