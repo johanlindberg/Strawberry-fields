@@ -81,15 +81,23 @@ def outer_bounds(gi, field):
 
 def simple_reduction(puzzle):
   """
-  simple_reduction reduces greenhouses until max constraint is met.
+  simple_reduction returns a solution to <puzzle>.
+
+  It works by reducing the number of greenhouses one by one until it has the
+  lowest cost and meets the max constraint.
   """
   max, field = puzzle
 
   # figure out the current number of greenhouses
   greenhouses = ids(field)
 
-  # join greenhouses until max constraint is met
-  while len(greenhouses) > max:
+  # we need to keep a copy of the previous field and it's cost in order
+  # to return it once we've realized we've done one reduction too many
+  prev_field, prev_cost = None, sys.maxint
+
+  # join greenhouses until when run out of them or until max constraint
+  # is met *and* cost increases from one reduction to the next
+  while len(greenhouses) > 1:
     j1, j2, js = 0, 0, sys.maxint
     # try each combination of greenhouses
     for g1, g2 in itertools.combinations(greenhouses, 2):
@@ -107,6 +115,14 @@ def simple_reduction(puzzle):
     # join j1 and j2, remove j2 from greenhouses
     field = join(j1, j2, field)
     greenhouses.remove(j2)
+
+    # decide if we should exit this loop or keep on reducing
+    curr_cost = cost(field)
+    if len(greenhouses) <= max:
+      if prev_cost < curr_cost:
+        return max, prev_field
+
+    prev_field, prev_cost = copy.deepcopy(field), curr_cost
 
   return max, field
 
