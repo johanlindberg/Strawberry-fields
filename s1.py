@@ -6,6 +6,16 @@ import itertools
 import string
 import sys
 
+def variant_reduction(puzzle):
+  """
+  variant_reduction flips and rotates <puzzle> to find a better solution.
+
+  >>> _, f = variant_reduction((4, [[0, 0, 1, 1, 1, 4, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 6, 6, 6, 9, 9, 11, 0, 0, 0, 0, 0, 0, 0, 0, 12, 12, 12, 0, 0, 0], [0, 0, 0, 0, 0, 15, 15, 17, 18, 19, 0, 0, 0, 0, 0, 0, 20, 20, 20, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 23, 24, 25, 26, 26, 26, 26, 30, 30, 32, 32, 32, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 35, 36, 36, 36, 36, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 35, 36, 36, 36, 36, 0, 0, 0, 0, 0, 0, 0, 0]]))
+  >>> cost(f)
+  90
+  """
+  pass
+
 def rotate(field):
   """
   rotates <field> 90 degrees.
@@ -327,6 +337,8 @@ def solve(filename):
   """
   for puzzle in parse_file(filename):
     max, field = simple_reduction(join_vertically(join_horizontally(identify(puzzle))))
+
+    print join_vertically(join_horizontally(identify(puzzle)))
 
     print cost(field)
     print format(field)
