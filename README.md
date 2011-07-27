@@ -44,3 +44,7 @@ covering's cost. Here is an example input-output pair:
 
 In this example, the solution cost of $90 is computed as (10+8*3) + (10+7*3) +
 (10+5*3).
+
+Run your program on the 9 sample inputs found in [this file](https://github.com/johanlindberg/Strawberry-fields/blob/master/rectangles.txt) and report the total
+cost of the 9 solutions found by your program, as well as each individual
+solution.
