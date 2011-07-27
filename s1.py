@@ -91,6 +91,9 @@ def cost(field):
   """
   cost calculates the total cost of all greenhouses in <field>.
   """
+  if field is None:
+    return sys.maxint
+
   greenhouses = ids(field)
 
   cost = 0
@@ -180,6 +183,16 @@ def simple_reduction(puzzle):
         diff = size3 - size2 - size1
         if diff < js:
           j1, j2, js = g1, g2, diff
+
+    # if we run out of combinations to try
+    # we must either surrender (return None)
+    # or if len(greenhouses) <= max return
+    # the best solution we have.
+    if j1 == 0:
+      if len(greenhouses) <= max:
+        return max, prev_field
+      else:
+        return max, None
 
     # join j1 and j2, remove j2 from greenhouses
     field = join(j1, j2, field)
