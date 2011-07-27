@@ -186,7 +186,7 @@ def simple_reduction(puzzle):
 
     # decide if we should exit this loop or keep on reducing
     curr_cost = cost(field)
-    if len(greenhouses) <= max:
+    if len(greenhouses) < max:
       if prev_cost < curr_cost:
         return max, prev_field
 
