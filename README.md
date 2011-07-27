@@ -52,7 +52,8 @@ solution.
 Results
 -------
 
-    johan-lindbergs-macbook:python johanlindberg$ python2.6 s1.py rectangles.txt 41
+    johan-lindbergs-macbook:python johanlindberg$ python2.6 s1.py rectangles.txt
+    41
     .............
     .............
     .............
