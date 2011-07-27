@@ -159,7 +159,7 @@ def simple_reduction(puzzle):
 
   # we need to keep a copy of the previous field and it's cost in order
   # to return it once we've realized we've done one reduction too many
-  prev_field, prev_cost = None, sys.maxint
+  prev_field, prev_cost = copy.deepcopy(field), cost(field)
 
   # join greenhouses until when run out of them or until max constraint
   # is met *and* cost increases from one reduction to the next
