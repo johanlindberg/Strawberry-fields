@@ -5,6 +5,7 @@ import doctest
 import itertools
 import string
 import sys
+import time
 
 def variant_reduction(puzzle):
   """
@@ -337,11 +338,16 @@ def solve(filename):
   """
   solve prints out solutions to each of the fields described in <filename>.
   """
+  count, total = 0, 0
   for puzzle in parse_file(filename):
     max, field = variant_reduction(join_vertically(join_horizontally(identify(puzzle))))
 
+    count += 1
+    total += cost(field)
     print cost(field)
     print format(field)
+
+  print "%s field(s). Total cost is $%s" % (count, total)
 
 if __name__ == "__main__":
   doctest.testmod()
