@@ -12,6 +12,10 @@ import time
 def backtracking_search(puzzle):
   """
   backtracking_search produces a solution to <puzzle>.
+
+  It works by exploring all paths through the solution space where the diff
+  after a join is the lowest. This is basically the same as simple_reduction
+  but it doesn't commit to the first path it encounters.
   """
   pass
 
