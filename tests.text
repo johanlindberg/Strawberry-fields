@@ -1,6 +1,9 @@
 Tests for parse_file
 --------------------
 
+>>> from common import *
+
+>>> from s0 import *
 >>> from s1 import *
 
 >>> f = open("*doctest*parse_file*", "w")
