@@ -2,6 +2,7 @@
 
 import common
 import s0
+import s1
 
 import copy
 import doctest
@@ -9,13 +10,13 @@ import itertools
 import sys
 import time
 
-def backtracking_search(puzzle, width = 3):
+def simple_reduction_search(puzzle, width = 2):
   """
-  backtracking_search produces a solution to <puzzle>.
+  simple_reduction_search produces a solution to <puzzle>.
 
-  It works by exploring all paths through the solution space where the diff
-  after a join is the lowest. This is basically the same as simple_reduction
-  but it doesn't commit to the first path it encounters.
+  It works by exploring all choices through the solution space where the diff
+  after a join is the lowest. It uses s1.simple_reduction as a heuristic to
+  decide on which path to commit to. 
 
   >>> solve("p3.text") # doctest: +ELLIPSIS
   71
@@ -54,15 +55,29 @@ def backtracking_search(puzzle, width = 3):
     # this path or replace solution.
     if len(diffs.keys()) > 0:
       _paths = diffs[sorted(diffs.keys())[0]]
+      __costs = {}
       for (g1, g2) in _paths[0:width]:
         _field = common.join(g1, g2, copy.deepcopy(field))
-        if common.cost(_field) < curr_cost:
-          paths.append((common.cost(_field), _field))
+        _, __field = s1.simple_reduction((max, copy.deepcopy(_field)))
+        if common.cost(__field) < curr_cost:
+          if common.cost(__field) not in __costs.keys():
+            __costs[common.cost(__field)] = [_field,]
+          else:
+            __costs[common.cost(__field)].append(_field)
 
-        if common.cost(_field) < solution[0] and \
-           len(greenhouses) <= max + 1:
+      # find the list of fields with the least cost and add them to the
+      # list of paths to explore
+      if len(__costs.keys()) > 0:
+        c = sorted(__costs.keys())[0]
+        __paths = __costs[c]
+        for f in __paths:
+          cf = common.cost(f)
+          paths.append((cf, f))
 
-          solution = (common.cost(_field), _field)
+          if cf < solution[0] and \
+                len(common.ids(f)) <= max:
+
+            solution = (cf, f)
 
   return max, solution[1]
 
@@ -72,7 +87,7 @@ def solve(filename):
   """
   count, total = 0, 0
   for puzzle in common.parse_file(filename):
-    max, field = backtracking_search(s0.join_vertically(s0.join_horizontally(s0.identify(puzzle))))
+    max, field = simple_reduction_search(s0.join_vertically(s0.join_horizontally(s0.identify(puzzle))))
 
     count += 1
     total += common.cost(field)
@@ -82,10 +97,11 @@ def solve(filename):
   print "%s field(s). Total cost is $%s" % (count, total)
 
 if __name__ == "__main__":
-  doctest.testmod()
-  doctest.testfile("tests.text")
-
-  if len(sys.argv[1:]) > 0:
+  if len(sys.argv[1:]) == 0:
+    print "Running doctests."
+    doctest.testmod()
+    doctest.testfile("tests.text")
+  else:
     for f in sys.argv[1:]:
       solve(f)
 
