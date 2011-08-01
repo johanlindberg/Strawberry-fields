@@ -59,11 +59,12 @@ def simple_reduction_search(puzzle, width = 2):
       for (g1, g2) in _paths[0:width]:
         _field = common.join(g1, g2, copy.deepcopy(field))
         _, __field = s1.simple_reduction((max, copy.deepcopy(_field)))
-        if common.cost(__field) < curr_cost:
-          if common.cost(__field) not in __costs.keys():
-            __costs[common.cost(__field)] = [_field,]
+        cf = common.cost(__field)
+        if cf < curr_cost:
+          if cf not in __costs.keys():
+            __costs[cf] = [_field,]
           else:
-            __costs[common.cost(__field)].append(_field)
+            __costs[cf].append(_field)
 
       # find the list of fields with the least cost and add them to the
       # list of paths to explore
@@ -75,7 +76,7 @@ def simple_reduction_search(puzzle, width = 2):
           paths.append((cf, f))
 
           if cf < solution[0] and \
-                len(common.ids(f)) <= max:
+             len(common.ids(f)) <= max:
 
             solution = (cf, f)
 
