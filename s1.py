@@ -153,10 +153,11 @@ def solve(filename):
   print "%s field(s). Total cost is $%s" % (count, total)
 
 if __name__ == "__main__":
-  doctest.testmod()
-  doctest.testfile("tests.text")
-
-  if len(sys.argv[1:]) > 0:
+  if len(sys.argv[1:]) == 0:
+    print "Running doctests."
+    doctest.testmod()
+    doctest.testfile("tests.text")
+  else:
     for f in sys.argv[1:]:
       solve(f)
 
