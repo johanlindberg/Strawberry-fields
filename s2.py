@@ -10,13 +10,9 @@ import itertools
 import sys
 import time
 
-def simple_reduction_search(puzzle, width = 2):
+def search(puzzle):
   """
-  simple_reduction_search produces a solution to <puzzle>.
-
-  It works by exploring all choices through the solution space where the diff
-  after a join is the lowest. It uses s1.simple_reduction as a heuristic to
-  decide on which path to commit to. 
+  search produces a solution to <puzzle>.
 
   >>> solve("p3.text") # doctest: +ELLIPSIS
   71
@@ -24,61 +20,72 @@ def simple_reduction_search(puzzle, width = 2):
   """
   max, field = puzzle
 
-  solution = (sys.maxint, None)
+  solution = (common.cost(field), field)
 
-  paths = [(common.cost(field), field), ]
+  paths = [solution, ]
   while len(paths) > 0:
     curr_cost, field = paths.pop(0)
 
-    # figure out the current number of greenhouses
+    # Figure out the current number of greenhouses
     greenhouses = common.ids(field)
 
-    diffs = {}
-    # try each combination of greenhouses
-    for g1, g2 in itertools.combinations(greenhouses, 2):
-      # find outer bounds (left, right, top and bottom) for a greenhouse made
-      # up of g1 and g2
-      size1, p11, p12 = common.outer_bounds(g1, field)
-      size2, p21, p22 = common.outer_bounds(g2, field)
-      size3, p31, p32 = common.outer_bounds([g1, g2], field)
+    if len(greenhouses) > 1:
+      diffs = {}
+      # Try each combination of greenhouses
+      for g1, g2 in itertools.combinations(greenhouses, 2):
+        # Find outer bounds (left, right, top and bottom) for a greenhouse made
+        # up of g1 and g2
+        size1, p11, p12 = common.outer_bounds(g1, field)
+        size2, p21, p22 = common.outer_bounds(g2, field)
+        size3, p31, p32 = common.outer_bounds([g1, g2], field)
 
-      if size3 is not None:
-        diff = size3 - size2 - size1
-        if diff not in diffs.keys():
-          diffs[diff] = [(g1, g2),]
-        else:
-          diffs[diff].append((g1, g2))
-
-    # find the list of joins which has the least diff, perform each join
-    # in a fresh copy of field and add it to paths if cost is lower than
-    # current cost, otherwise compare cost to solution and either discard
-    # this path or replace solution.
-    if len(diffs.keys()) > 0:
-      _paths = diffs[sorted(diffs.keys())[0]]
-      __costs = {}
-      for (g1, g2) in _paths[0:width]:
-        _field = common.join(g1, g2, copy.deepcopy(field))
-        _, __field = s1.simple_reduction((max, copy.deepcopy(_field)))
-        cf = common.cost(__field)
-        if cf < curr_cost:
-          if cf not in __costs.keys():
-            __costs[cf] = [_field,]
+        if size3 is not None:
+          diff = size3 - size2 - size1
+          if diff not in diffs.keys():
+            diffs[diff] = [(g1, g2),]
           else:
-            __costs[cf].append(_field)
+            diffs[diff].append((g1, g2))
 
-      # find the list of fields with the least cost and add them to the
-      # list of paths to explore
-      if len(__costs.keys()) > 0:
-        c = sorted(__costs.keys())[0]
-        __paths = __costs[c]
-        for f in __paths:
-          cf = common.cost(f)
-          paths.append((cf, f))
+      # Find the list of joins which has the lowest diff and select the joins
+      # of the most frequent greenhouse.
+      if len(diffs.keys()) > 0:
+        freqs = {}
+        for (g1, g2) in diffs[sorted(diffs.keys())[0]]:
+          if g1 not in freqs.keys():
+            freqs[g1] = [(g1, g2),]
+          else:
+            freqs[g1].append((g1, g2))
 
+          if g2 not in freqs.keys():
+            freqs[g2] = [(g1, g2),]
+          else:
+            freqs[g2].append((g1, g2))
+
+        # Perform each join in a fresh copy of field and add it to paths if
+        # cost is lower than current cost, otherwise compare cost to solution
+        # and either discard this path or add it as best-so-far.
+        joins = freqs[sorted(freqs.keys(), key = lambda k: len(freqs[k]), reverse = True)[0]]
+        if len(joins) == 1:
+          (g1, g2) = joins[0]
+          _, _field = s1.simple_reduction((max, common.join(g1, g2, copy.deepcopy(field))))
+
+          cf = common.cost(_field)
           if cf < solution[0] and \
-             len(common.ids(f)) <= max:
+             len(common.ids(_field)) <= max:
 
-            solution = (cf, f)
+            solution = (cf, _field)
+
+        elif len(joins) > 1:
+          for (g1, g2) in joins:
+            _field = common.join(g1, g2, copy.deepcopy(field))
+            cf = common.cost(_field)
+            if cf < curr_cost:
+              paths.append((cf, _field))
+
+              if cf < solution[0] and \
+                 len(common.ids(_field)) <= max:
+
+                solution = (cf, _field)
 
   return max, solution[1]
 
@@ -86,9 +93,10 @@ def solve(filename):
   """
   solve prints out solutions to each of the fields described in <filename>.
   """
+  start = time.time()
   count, total = 0, 0
   for puzzle in common.parse_file(filename):
-    max, field = simple_reduction_search(s0.join_vertically(s0.join_horizontally(s0.identify(puzzle))))
+    max, field = search(s0.join_vertically(s0.join_horizontally(s0.identify(puzzle))))
 
     count += 1
     total += common.cost(field)
@@ -96,6 +104,7 @@ def solve(filename):
     print common.format(field)
 
   print "%s field(s). Total cost is $%s" % (count, total)
+  print time.strftime("%M:%S", time.localtime(time.time() - start))
 
 if __name__ == "__main__":
   if len(sys.argv[1:]) == 0:
