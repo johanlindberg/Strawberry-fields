@@ -103,11 +103,12 @@ def simple_reduction(puzzle):
     for g1, g2 in itertools.combinations(greenhouses, 2):
       # find outer bounds (left, right, top and bottom) for a greenhouse made
       # up of g1 and g2
-      size1, p11, p12 = common.outer_bounds(g1, field)
-      size2, p21, p22 = common.outer_bounds(g2, field)
       size3, p31, p32 = common.outer_bounds([g1, g2], field)
 
       if size3 is not None:
+        size1, p11, p12 = common.outer_bounds(g1, field)
+        size2, p21, p22 = common.outer_bounds(g2, field)
+
         diff = size3 - size2 - size1
         if diff < js:
           j1, j2, js = g1, g2, diff
@@ -141,6 +142,7 @@ def solve(filename):
   """
   solve prints out solutions to each of the fields described in <filename>.
   """
+  start = time.time()
   count, total = 0, 0
   for puzzle in common.parse_file(filename):
     max, field = variant_reduction(s0.join_vertically(s0.join_horizontally(s0.identify(puzzle))))
@@ -151,6 +153,7 @@ def solve(filename):
     print common.format(field)
 
   print "%s field(s). Total cost is $%s" % (count, total)
+  print time.strftime("%M:%S", time.localtime(time.time() - start))
 
 if __name__ == "__main__":
   if len(sys.argv[1:]) == 0:
