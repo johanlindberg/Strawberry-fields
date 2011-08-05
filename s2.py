@@ -35,11 +35,12 @@ def search(puzzle):
       for g1, g2 in itertools.combinations(greenhouses, 2):
         # Find outer bounds (left, right, top and bottom) for a greenhouse made
         # up of g1 and g2
-        size1, p11, p12 = common.outer_bounds(g1, field)
-        size2, p21, p22 = common.outer_bounds(g2, field)
         size3, p31, p32 = common.outer_bounds([g1, g2], field)
 
         if size3 is not None:
+          size1, p11, p12 = common.outer_bounds(g1, field)
+          size2, p21, p22 = common.outer_bounds(g2, field)
+
           diff = size3 - size2 - size1
           if diff not in diffs.keys():
             diffs[diff] = [(g1, g2),]
