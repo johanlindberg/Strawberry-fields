@@ -10,7 +10,7 @@ import itertools
 import sys
 import time
 
-def search(puzzle):
+def search(puzzle, breakpoint = 2):
   """
   search produces a solution to <puzzle>.
 
@@ -66,7 +66,7 @@ def search(puzzle):
         # cost is lower than current cost, otherwise compare cost to solution
         # and either discard this path or add it as best-so-far.
         joins = freqs[sorted(freqs.keys(), key = lambda k: len(freqs[k]), reverse = True)[0]]
-        if len(joins) <= 2:
+        if len(joins) <= breakpoint:
           (g1, g2) = joins[0]
           _, _field = s1.simple_reduction((max, common.join(g1, g2, copy.deepcopy(field))))
 
@@ -76,7 +76,7 @@ def search(puzzle):
 
             solution = (cf, _field)
 
-        elif len(joins) > 2:
+        else:
           for (g1, g2) in joins:
             _field = common.join(g1, g2, copy.deepcopy(field))
             cf = common.cost(_field)
