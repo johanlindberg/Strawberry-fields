@@ -153,7 +153,7 @@ def solve(filename):
     print common.format(field)
 
   print "%s field(s). Total cost is $%s" % (count, total)
-  print time.strftime("%M:%S", time.localtime(time.time() - start))
+  print time.strftime("%H:%M:%S", time.gmtime(time.time() - start))
 
 if __name__ == "__main__":
   if len(sys.argv[1:]) == 0:

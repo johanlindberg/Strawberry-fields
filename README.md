@@ -66,7 +66,7 @@ Both solvers arrive at $90 as total cost.
     .......CCCCCCCCC......
     
     1 field(s). Total cost is $90
-    00:00
+    00:00:00
 
     > python2.6 s2.py p1.text 
     90
@@ -78,7 +78,7 @@ Both solvers arrive at $90 as total cost.
     .......CCCCCCCCC......
 
     1 field(s). Total cost is $90
-    00:29
+    00:00:04
 
 Here are the results for [rectangles.txt](https://github.com/johanlindberg/Strawberry-fields/blob/master/rectangles.txt).
 
@@ -242,7 +242,7 @@ The second solver finds a $12 better solution to puzzle #3 ([p3.text](https://gi
     ............JJJJJJJJJJJJJJJ.............
     
     9 field(s). Total cost is $1486
-    05:30
+    00:05:30
 
     > python2.6 s2.py rectangles.txt
     41
@@ -402,4 +402,4 @@ The second solver finds a $12 better solution to puzzle #3 ([p3.text](https://gi
     ............JJJJJJJJJJJJJJJ.............
     
     9 field(s). Total cost is $1474
-    10:08
+    ??:10:08
