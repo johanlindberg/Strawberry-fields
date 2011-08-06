@@ -82,7 +82,7 @@ Both solvers arrive at $90 as total cost.
 
 Here are the results for [rectangles.txt](https://github.com/johanlindberg/Strawberry-fields/blob/master/rectangles.txt).
 
-The second solver finds a $12 better solution to puzzle #3 ([p3.text](https://github.com/johanlindberg/Strawberry-fields/blob/master/p3.text)) but spends a lot more run time to do so. I didn't time the puzzles individually but I believe that the first 8 puzzles were solved within a reasonable time (less than an hour) whilst the last one required too much time.
+The second solver finds a $12 better solution to puzzle #3 ([p3.text](https://github.com/johanlindberg/Strawberry-fields/blob/master/p3.text)) but spends a lot more run time to do so. Most of that time is spent on the last puzzle, unfortunately it still misses the better solution of $364 (see [strawberry.txt](https://github.com/sunilnandihalli/strawberry-fields/blob/master/strawberry.txt#L287))
 
     > python2.6 s1.py rectangles.txt
     cost: 41 time: 00:00:00
