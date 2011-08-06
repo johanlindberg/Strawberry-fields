@@ -94,18 +94,19 @@ def solve(filename):
   """
   solve prints out solutions to each of the fields described in <filename>.
   """
-  start = time.time()
+  tstart = time.time()
   count, total = 0, 0
   for puzzle in common.parse_file(filename):
+    pstart = time.time()
     max, field = search(s0.join_vertically(s0.join_horizontally(s0.identify(puzzle))))
 
     count += 1
     total += common.cost(field)
-    print common.cost(field)
+    print "cost:", common.cost(field), "time:", time.strftime("%H:%M:%S", time.gmtime(time.time() - pstart))
     print common.format(field)
 
   print "%s field(s). Total cost is $%s" % (count, total)
-  print time.strftime("%H:%M:%S", time.gmtime(time.time() - start))
+  print time.strftime("Total time is %H:%M:%S", time.gmtime(time.time() - tstart))
 
 if __name__ == "__main__":
   if len(sys.argv[1:]) == 0:
